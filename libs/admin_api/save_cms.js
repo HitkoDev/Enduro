@@ -58,9 +58,9 @@ api_call.prototype.call = function (req, res, enduro_server) {
 				throw new Error()
 			})
 			// removed juicebox pack from saving cms
-			.then(() => {
-				return juicebox.pack(requesting_user.username)
-			}, () => { throw new Error() })
+			// .then(() => {
+			// 	return juicebox.pack(requesting_user.username)
+			// }, () => { throw new Error() })
 			.then(() => {
 
 				// re-renders enduro - essential to publishing the change
@@ -69,7 +69,7 @@ api_call.prototype.call = function (req, res, enduro_server) {
 			}, () => { throw new Error() })
 			.then(() => {
 				// send the response early to cut down on publish time
-				res.send()
+				res.redirect('/admin_api/juice_push?sid=' + encodeURIComponent(sid))
 			}, () => {})
 	})
 
