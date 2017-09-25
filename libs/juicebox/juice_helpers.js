@@ -85,10 +85,7 @@ juice_helpers.prototype.spill_newer = function (folder) {
 			}
 		})
 
-		Promise.all(copy_stack)
-			.then(() => {
-				resolve()
-			})
+		resolve(Promise.all(copy_stack))
 	})
 }
 
@@ -135,11 +132,11 @@ function get_diff (folder) {
 
 function copy_file_to_cms (entry) {
 	return new Promise(function (resolve, reject) {
-
+		
 		var from_path = path.join(entry.path2, entry.name2)
-		var to_path = path.join(enduro.project_path, 'cms', path.join(entry.path2, entry.name2).match(/\/cms\/(.*)/)[1])
+		var to_path = path.join(entry.path1, entry.name1)
 
-		fs.copy(from_path, to_path, {preserveTimestamps: true}, () => {
+		fs.copy(from_path, to_path, { preserveTimestamps: true }, () => {
 			resolve()
 		})
 	})
