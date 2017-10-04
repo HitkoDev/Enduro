@@ -85,7 +85,7 @@ enduro_server.prototype.run = function (server_setup) {
 		app.use('/remote', express.static(enduro.project_path + '/remote'))
 
 		// handle for executing enduro refresh from client
-		app.get('/admin_api_refresh', function (req, res) {
+		app.get('/admin_api/refresh', function (req, res) {
 			enduro.actions.render()
 				.then(() => {
 					res.send({ success: true, message: 'enduro refreshed successfully' })
