@@ -24,6 +24,7 @@ var default_configuration = {
 		build_folder: '_generated',
 		port: 5000,
 		cultures: [],
+		spa: false,
 	},
 	default_secret_configuration: {}
 }

@@ -6,13 +6,14 @@
 // *
 // *	uses express mvc
 // * ———————————————————————————————————————————————————————— * //
-var enduro_server = function () {}
+var enduro_server = function () { }
 
 // vendor dependencies
 var express = require('express')
 var app = express()
 var session = require('express-session')
 var cors = require('cors')
+var fs = require('fs')
 var multiparty_middleware = require('connect-multiparty')()
 var cookieParser = require('cookie-parser')
 
@@ -126,6 +127,18 @@ enduro_server.prototype.run = function (server_setup) {
 					})
 					.then((requested_url) => {
 						// serves the requested file
+						if (enduro.config.spa) {
+							let parts = requested_url.split('/')
+							while (parts.length) {
+								if (fs.existsSync(enduro.project_path + '/' + enduro.config.build_folder + parts.join('/') + '.html'))
+									return res.sendFile(enduro.project_path + '/' + enduro.config.build_folder + parts.join('/') + '.html')
+
+								if (parts[parts.length - 1] == 'index')
+									parts.splice(parts.length - 1, 1)
+								else
+									parts[parts.length - 1] = 'index'
+							}
+						}
 						res.sendFile(enduro.project_path + '/' + enduro.config.build_folder + requested_url + '.html')
 					}, () => {
 						res.sendFile(enduro.config.admin_folder + '/enduro_login/index.html')
